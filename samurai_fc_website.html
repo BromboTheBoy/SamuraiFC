@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samurai FC — Kenya's Rising Force</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --scarlet: #C8102E;
+    --scarlet-dark: #8B0A1E;
+    --scarlet-pale: #fdf0f2;
+    --gold: #B8960C;
+    --gold-light: #F5D060;
+    --ink: #0D0D0D;
+    --ash: #F3F3F0;
+    --mid: #7A7A72;
+    --white: #FFFFFF;
+    --green: #1A6B35;
+    --green-light: #E8F4EC;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--ink); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 64px;
+    background: rgba(13,13,13,0.96); backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(200,16,46,0.3);
+  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.08em; color: var(--white); }
+  .nav-logo span { color: var(--gold-light); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-cta { background: var(--scarlet); color: white; padding: 8px 20px; border-radius: 2px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--scarlet-dark); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    background: var(--ink);
+    position: relative; overflow: hidden;
+    padding: 80px 5vw 60px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 59px,
+      rgba(200,16,46,0.06) 59px,
+      rgba(200,16,46,0.06) 60px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 59px,
+      rgba(200,16,46,0.06) 59px,
+      rgba(200,16,46,0.06) 60px
+    );
+  }
+  .hero-accent { position: absolute; right: 0; top: 0; bottom: 0; width: 42vw; background: var(--scarlet); clip-path: polygon(18% 0, 100% 0, 100% 100%, 0% 100%); opacity: 0.12; }
+  .hero-content { position: relative; z-index: 2; max-width: 760px; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; }
+  .hero-eyebrow span { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-light); }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 2px; background: var(--scarlet); }
+  .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; color: var(--white); letter-spacing: 0.02em; }
+  .hero h1 em { font-style: normal; color: var(--scarlet); -webkit-text-stroke: 1px var(--scarlet); }
+  .hero-sub { margin-top: 1.5rem; font-size: 1.05rem; line-height: 1.7; color: rgba(255,255,255,0.65); max-width: 520px; font-weight: 300; }
+  .hero-sub strong { color: var(--gold-light); font-weight: 500; }
+  .hero-actions { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--scarlet); color: white; padding: 14px 32px; border-radius: 2px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; text-decoration: none; display: inline-block; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--scarlet-dark); }
+  .btn-ghost { border: 1px solid rgba(255,255,255,0.3); color: white; padding: 14px 32px; border-radius: 2px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; text-decoration: none; display: inline-block; transition: border-color 0.2s, background 0.2s; }
+  .btn-ghost:hover { border-color: var(--gold-light); color: var(--gold-light); }
+  .hero-stats { margin-top: 3.5rem; display: grid; grid-template-columns: repeat(3, auto); gap: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; width: fit-content; }
+  .hero-stat { padding-right: 3rem; }
+  .hero-stat + .hero-stat { padding-left: 3rem; border-left: 1px solid rgba(255,255,255,0.1); }
+  .hero-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--white); line-height: 1; }
+  .hero-stat-num span { color: var(--scarlet); }
+  .hero-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 2px; }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 5vw; }
+  .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--scarlet); margin-bottom: 0.75rem; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1; color: var(--ink); }
+  .section-title.light { color: var(--white); }
+  .section-body { font-size: 1rem; line-height: 1.75; color: var(--mid); max-width: 600px; margin-top: 1rem; }
+
+  /* MISSION */
+  .mission { background: var(--ash); }
+  .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 3rem; }
+  .mission-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+  .pillar { background: white; border: 1px solid rgba(0,0,0,0.07); padding: 1.25rem; border-radius: 4px; border-left: 3px solid var(--scarlet); }
+  .pillar-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .pillar h4 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.3rem; }
+  .pillar p { font-size: 0.82rem; color: var(--mid); line-height: 1.5; }
+  .mission-visual { position: relative; }
+  .mission-crest { background: var(--ink); border-radius: 8px; padding: 3rem; display: flex; align-items: center; justify-content: center; min-height: 360px; }
+  .crest-inner { text-align: center; }
+  .crest-inner .big { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: var(--white); line-height: 1; }
+  .crest-inner .big em { color: var(--scarlet); font-style: normal; }
+  .crest-inner .sub-text { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.25em; text-transform: uppercase; margin-top: 0.5rem; }
+  .crest-tag { background: var(--scarlet); color: white; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 16px; display: inline-block; margin-top: 1.5rem; }
+  .chendeleza-badge { position: absolute; bottom: -1rem; right: -1rem; background: white; border: 1px solid rgba(0,0,0,0.08); padding: 0.75rem 1.25rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+  .chendeleza-badge span { color: var(--scarlet); }
+
+  /* PROGRAM */
+  .program { background: var(--ink); }
+  .program-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: rgba(255,255,255,0.08); margin-top: 3rem; border: 1px solid rgba(255,255,255,0.08); }
+  .program-card { background: var(--ink); padding: 2rem; }
+  .program-card:hover { background: rgba(200,16,46,0.06); }
+  .program-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: rgba(200,16,46,0.25); line-height: 1; margin-bottom: 1rem; }
+  .program-card h3 { font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem; }
+  .program-card p { font-size: 0.83rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+  .program-card .tag { display: inline-block; background: rgba(200,16,46,0.15); color: var(--scarlet); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 2px; margin-bottom: 0.75rem; }
+
+  /* TIMELINE */
+  .timeline { background: var(--white); }
+  .timeline-track { margin-top: 3rem; position: relative; }
+  .timeline-track::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--scarlet), transparent); margin-left: 18px; }
+  .timeline-item { display: flex; gap: 2rem; padding-bottom: 2.5rem; }
+  .timeline-dot { width: 38px; height: 38px; border-radius: 50%; background: var(--scarlet); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 1rem; color: white; position: relative; z-index: 1; }
+  .timeline-content { padding-top: 6px; }
+  .timeline-phase { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--scarlet); margin-bottom: 0.3rem; }
+  .timeline-content h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .timeline-content p { font-size: 0.87rem; color: var(--mid); line-height: 1.6; }
+
+  /* PITCH */
+  .pitch { background: var(--ash); }
+  .pitch-inner { background: var(--ink); border-radius: 6px; padding: 3rem; margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .pitch-left h2 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--white); line-height: 1.05; }
+  .pitch-left h2 em { font-style: normal; color: var(--scarlet); }
+  .pitch-left p { color: rgba(255,255,255,0.55); font-size: 0.9rem; margin-top: 1rem; line-height: 1.7; }
+  .pitch-specs { display: flex; flex-direction: column; gap: 1rem; }
+  .spec-row { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .spec-label { font-size: 0.8rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.08em; }
+  .spec-val { font-size: 0.9rem; font-weight: 600; color: var(--white); }
+  .spec-badge { background: var(--green); color: white; font-size: 0.68rem; font-weight: 700; padding: 2px 10px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* FANS */
+  .fans { background: var(--white); }
+  .fans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .fan-card { border: 1px solid rgba(0,0,0,0.08); border-radius: 6px; padding: 1.75rem; }
+  .fan-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .fan-card p { font-size: 0.83rem; color: var(--mid); line-height: 1.6; }
+  .fan-price { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.06); }
+  .fan-price .amount { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; }
+  .fan-price .per { font-size: 0.75rem; color: var(--mid); margin-left: 4px; }
+  .fan-card.featured { border-color: var(--scarlet); border-width: 2px; }
+  .fan-badge { background: var(--scarlet); color: white; font-size: 0.68rem; font-weight: 700; padding: 3px 12px; display: inline-block; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
+
+  /* SUPPORT */
+  .support { background: var(--scarlet); }
+  .support .section-label { color: var(--gold-light); }
+  .support-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 2rem; }
+  .support h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--white); line-height: 1; }
+  .support p { color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.7; margin-top: 1rem; }
+  .support-form { background: rgba(0,0,0,0.2); border-radius: 6px; padding: 2rem; }
+  .form-row { margin-bottom: 1rem; }
+  .form-row label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); display: block; margin-bottom: 0.4rem; }
+  .form-row input, .form-row select { width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 3px; color: white; font-size: 0.9rem; font-family: 'Inter', sans-serif; }
+  .form-row input::placeholder { color: rgba(255,255,255,0.35); }
+  .form-row select option { color: var(--ink); }
+  .btn-gold { background: var(--gold-light); color: var(--ink); padding: 12px 28px; border-radius: 2px; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border: none; cursor: pointer; width: 100%; margin-top: 0.5rem; transition: background 0.2s; }
+  .btn-gold:hover { background: var(--gold); }
+
+  /* FOOTER */
+  footer { background: var(--ink); padding: 3rem 5vw; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; }
+  .footer-brand .logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: white; letter-spacing: 0.06em; }
+  .footer-brand .logo span { color: var(--scarlet); }
+  .footer-brand p { font-size: 0.82rem; color: rgba(255,255,255,0.4); margin-top: 0.75rem; line-height: 1.6; }
+  .footer-links h4 { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1rem; }
+  .footer-links ul { list-style: none; }
+  .footer-links ul li { margin-bottom: 0.5rem; }
+  .footer-links ul li a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-links ul li a:hover { color: var(--gold-light); }
+  .footer-bottom { background: rgba(255,255,255,0.04); border-top: 1px solid rgba(255,255,255,0.07); padding: 1.25rem 5vw; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+  .footer-bottom a { color: rgba(200,16,46,0.7); text-decoration: none; }
+  .footer-bottom a:hover { color: var(--scarlet); }
+
+  /* JAPANESE ACCENT */
+  .jp-text { font-family: 'Noto Serif JP', serif; color: rgba(200,16,46,0.2); font-size: 5rem; position: absolute; right: 5vw; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; letter-spacing: 0.2em; pointer-events: none; user-select: none; }
+
+  @media (max-width: 768px) {
+    .mission-grid, .pitch-inner, .support-inner { grid-template-columns: 1fr; gap: 2rem; }
+    footer { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-stats { grid-template-columns: 1fr; }
+    .hero-stat + .hero-stat { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: 1rem; }
+    .nav-links { display: none; }
+    .jp-text { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Samurai <span>FC</span></div>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#program">Program</a></li>
+    <li><a href="#pitch">The Pitch</a></li>
+    <li><a href="#fans">Join</a></li>
+    <li><a href="#support">Support</a></li>
+  </ul>
+  <a href="#support" class="nav-cta">Join the Dojo</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-accent"></div>
+  <div class="jp-text">侍FC</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span>Nairobi, Kenya · Est. 2025</span></div>
+    <h1>SAMURAI<br><em>FC</em></h1>
+    <p class="hero-sub">
+      Born from Kenya's streets. Forged with Japanese discipline. A football academy built for <strong>talented, underprivileged youth</strong> — giving them a path, a pitch, and a future.
+    </p>
+    <div class="hero-actions">
+      <a href="#support" class="btn-primary">Support a Player</a>
+      <a href="#program" class="btn-ghost">See the Program</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">25<span>+</span></div>
+        <div class="hero-stat-label">Recruits per cohort</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">2</div>
+        <div class="hero-stat-label">Year development program</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">100<span>%</span></div>
+        <div class="hero-stat-label">Exit-ready at age 20</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission" id="mission">
+  <div class="section-label">Our Mission</div>
+  <div class="section-title">More Than Football.</div>
+  <div class="mission-grid">
+    <div>
+      <p class="section-body">Samurai FC was born from a single belief: that raw talent without opportunity is a tragedy. We find Kenya's most gifted underprivileged youth, aged 16–18, and invest everything in them — not just as footballers, but as people.</p>
+      <p class="section-body" style="margin-top:1rem;">By 20, every Samurai is ready for the next level — whether that's a professional league contract, or a trade skill and online education certification that opens another door.</p>
+      <div class="mission-pillars">
+        <div class="pillar">
+          <div class="pillar-icon">🏠</div>
+          <h4>Housing & Nutrition</h4>
+          <p>Safe accommodation and performance nutrition — so players focus on growth, not survival.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">⚽</div>
+          <h4>Elite Coaching</h4>
+          <p>Technical, tactical, physical, and psychological coaching from certified professionals.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🔧</div>
+          <h4>Trade Skills</h4>
+          <p>Barbershop, mechanics, carpentry, plumbing — real skills for real life.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">💻</div>
+          <h4>Online Education</h4>
+          <p>Digital certifications via Chendeleza Africa's partner network — yours to keep forever.</p>
+        </div>
+      </div>
+    </div>
+    <div class="mission-visual">
+      <div class="mission-crest">
+        <div class="crest-inner">
+          <div class="big">⚡<br>侍</div>
+          <div class="sub-text">Samurai Football Club</div>
+          <div class="crest-tag">Nairobi, Kenya</div>
+        </div>
+      </div>
+      <div class="chendeleza-badge">Powered by <span>Chendeleza Africa</span> · A Japanese Venture</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM -->
+<section class="program" id="program">
+  <div class="section-label" style="color: rgba(200,16,46,0.8);">The 2-Year Program</div>
+  <div class="section-title light">What We Build.</div>
+  <div style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 0.75rem; max-width: 560px;">Every recruit enters at 18 and exits at 20 — fully developed on and off the pitch.</div>
+  <div class="program-grid">
+    <div class="program-card">
+      <div class="program-num">01</div>
+      <div class="tag">Technical</div>
+      <h3>Ball Mastery & Technique</h3>
+      <p>First touch, dribbling, passing accuracy, shooting mechanics — drilled daily at CAF-standard facilities on our regulation grass pitch.</p>
+    </div>
+    <div class="program-card">
+      <div class="program-num">02</div>
+      <div class="tag">Tactical</div>
+      <h3>Game Intelligence</h3>
+      <p>Positional play, formations, pressing systems, and video analysis sessions with licensed coaches who understand African and global football.</p>
+    </div>
+    <div class="program-card">
+      <div class="program-num">03</div>
+      <div class="tag">Physical</div>
+      <h3>Athletic Development</h3>
+      <p>Periodised strength and conditioning, injury prevention, recovery protocols, and sports science monitoring for every player.</p>
+    </div>
+    <div class="program-card">
+      <div class="program-num">04</div>
+      <div class="tag">Psychological</div>
+      <h3>Mental Performance</h3>
+      <p>Resilience coaching, discipline frameworks, team culture, and individual counselling — the mental edge that separates good from elite.</p>
+    </div>
+    <div class="program-card">
+      <div class="program-num">05</div>
+      <div class="tag">Value Addition</div>
+      <h3>Trade Skills & Certs</h3>
+      <p>Barbershop, mechanics, carpentry, or plumbing — every player completes a vocational track alongside digital certifications from our partner network.</p>
+    </div>
+    <div class="program-card">
+      <div class="program-num">06</div>
+      <div class="tag">Visibility</div>
+      <h3>Scouts & Exposure</h3>
+      <p>Organised matches, scout invitations, talent showcases, and digital player profiles that travel to clubs in Kenya, Africa, and beyond.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline" id="journey">
+  <div class="section-label">The Journey</div>
+  <div class="section-title">Year 1 → Year 3 Roadmap</div>
+  <div class="timeline-track" style="margin-top:3rem; max-width: 680px;">
+    <div class="timeline-item">
+      <div class="timeline-dot">Y0</div>
+      <div class="timeline-content">
+        <div class="timeline-phase">Foundation · Year 0</div>
+        <h3>Scouting & Selection</h3>
+        <p>Community-based scouting across Nairobi, Mombasa, and upcountry regions. 25 recruits selected per cohort based on talent, character, and need.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">Y1</div>
+      <div class="timeline-content">
+        <div class="timeline-phase">Development · Year 1</div>
+        <h3>Foundation Building</h3>
+        <p>Full-time coaching program begins. Housing, nutrition, and wellness established. Trade skills enrollment starts. First competitive friendlies.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">Y2</div>
+      <div class="timeline-content">
+        <div class="timeline-phase">Performance · Year 2</div>
+        <h3>Competition & Exposure</h3>
+        <p>Entry into structured regional leagues. Scout showcases. Online education certifications completed. Players profiled digitally for international visibility.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">→</div>
+      <div class="timeline-content">
+        <div class="timeline-phase">Exit · Age 20</div>
+        <h3>Transition: Two Paths</h3>
+        <p><strong>Path A:</strong> Transfer to a higher-tier professional or semi-professional club — Samurai FC receives a transfer fee. <strong>Path B:</strong> Trade skill + certified education — ready for economic independence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PITCH -->
+<section class="pitch" id="pitch">
+  <div class="section-label">The Facility</div>
+  <div class="section-title light">A Pitch Built to CAF Standards.</div>
+  <div class="pitch-inner">
+    <div class="pitch-left">
+      <h2>Regulation Size.<br><em>World-Class</em><br>Surface.</h2>
+      <p>We are constructing a flat, full-size football pitch in Kenya, featuring CAF-quality natural grass with professional sub-surface drainage — built to last, built to perform.</p>
+      <a href="#support" class="btn-primary" style="display:inline-block; margin-top:1.75rem;">Help Fund the Pitch</a>
+    </div>
+    <div class="pitch-specs">
+      <div class="spec-row">
+        <span class="spec-label">Dimensions</span>
+        <span class="spec-val">105m × 68m (FIFA Reg.)</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Surface</span>
+        <span class="spec-val">Kikuyu / Bermuda Natural Grass</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Drainage</span>
+        <span class="spec-val">Sub-surface pipe drainage + crown</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Irrigation</span>
+        <span class="spec-val">Pop-up sprinkler system</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Lighting</span>
+        <span class="spec-val">LED floodlights — training capable</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">Standard</span>
+        <span class="spec-badge">CAF Compliant</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FANS -->
+<section class="fans" id="fans">
+  <div class="section-label">Join the Club</div>
+  <div class="section-title">Become a Samurai Fan</div>
+  <p class="section-body">Every fan subscription directly funds player development. Choose your tier and join the movement.</p>
+  <div class="fans-grid">
+    <div class="fan-card">
+      <h3>Supporter</h3>
+      <p>Digital membership, monthly newsletter, player spotlight content, and access to our fan community.</p>
+      <div class="fan-price">
+        <span class="amount">KSH 500</span><span class="per">/ month</span>
+      </div>
+      <div style="margin-top:1rem;">
+        <a href="#support" class="btn-primary" style="display:block; text-align:center; font-size:0.78rem;">Join as Supporter</a>
+      </div>
+    </div>
+    <div class="fan-card featured">
+      <div class="fan-badge">Most Popular</div>
+      <h3>Samurai Member</h3>
+      <p>Everything in Supporter, plus match-day invitations, behind-the-scenes content, and a physical membership card with crest.</p>
+      <div class="fan-price">
+        <span class="amount">KSH 1,500</span><span class="per">/ month</span>
+      </div>
+      <div style="margin-top:1rem;">
+        <a href="#support" class="btn-primary" style="display:block; text-align:center; font-size:0.78rem;">Join as Samurai Member</a>
+      </div>
+    </div>
+    <div class="fan-card">
+      <h3>Dojo Patron</h3>
+      <p>All benefits plus naming rights on a player sponsorship, quarterly impact reports, and direct video call with coaching staff.</p>
+      <div class="fan-price">
+        <span class="amount">KSH 5,000</span><span class="per">/ month</span>
+      </div>
+      <div style="margin-top:1rem;">
+        <a href="#support" class="btn-primary" style="display:block; text-align:center; font-size:0.78rem;">Become a Patron</a>
+      </div>
+    </div>
+    <div class="fan-card">
+      <h3>Corporate Partner</h3>
+      <p>Brand visibility, CSR documentation, staff engagement events, and co-branded content with Samurai FC and Chendeleza Africa.</p>
+      <div class="fan-price">
+        <span class="amount">KSH 25,000</span><span class="per">/ month</span>
+      </div>
+      <div style="margin-top:1rem;">
+        <a href="#support" class="btn-primary" style="display:block; text-align:center; font-size:0.78rem;">Partner With Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORT / CTA -->
+<section class="support" id="support">
+  <div class="section-label">Get Involved</div>
+  <div class="support-inner">
+    <div>
+      <h2>Join the Dojo.<br>Change a Life.</h2>
+      <p>Every shilling raised goes directly to player welfare, coaching excellence, and facility development. With your support, Samurai FC becomes a model for youth football development across East Africa.</p>
+      <p style="margin-top:1rem; font-size:0.85rem;">Managed by <strong>Chendeleza Africa</strong> — a Japanese-Kenyan social enterprise committed to sustainable impact.</p>
+      <div style="margin-top:1.5rem; display:flex; gap:2rem; flex-wrap:wrap;">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:2.2rem; color:white; line-height:1;">KSH 85K</div>
+          <div style="font-size:0.72rem; color:rgba(255,255,255,0.5); letter-spacing:0.1em; text-transform:uppercase;">Monthly per player</div>
+        </div>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:2.2rem; color:white; line-height:1;">25</div>
+          <div style="font-size:0.72rem; color:rgba(255,255,255,0.5); letter-spacing:0.1em; text-transform:uppercase;">Players per cohort</div>
+        </div>
+      </div>
+    </div>
+    <div class="support-form">
+      <div class="form-row">
+        <label>Your Name</label>
+        <input type="text" placeholder="John Kamau">
+      </div>
+      <div class="form-row">
+        <label>Email Address</label>
+        <input type="email" placeholder="john@example.com">
+      </div>
+      <div class="form-row">
+        <label>I want to</label>
+        <select>
+          <option>Become a Fan Member</option>
+          <option>Sponsor a Player</option>
+          <option>Partner as a Business</option>
+          <option>Donate to the Pitch Fund</option>
+          <option>Volunteer / Coach</option>
+          <option>Refer a Talented Youth</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Monthly Budget (KSH)</label>
+        <input type="text" placeholder="e.g. 1,500">
+      </div>
+      <button class="btn-gold">Send My Interest →</button>
+      <p style="font-size:0.72rem; color:rgba(255,255,255,0.35); margin-top:0.75rem; text-align:center;">Chendeleza Africa will contact you within 48 hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo">Samurai <span>FC</span></div>
+    <p>Kenya's rising football academy. Born from discipline, built for the future. A Chendeleza Africa venture in partnership with Japanese investors.</p>
+  </div>
+  <div class="footer-links">
+    <h4>Club</h4>
+    <ul>
+      <li><a href="#mission">Our Mission</a></li>
+      <li><a href="#program">The Program</a></li>
+      <li><a href="#pitch">The Facility</a></li>
+      <li><a href="#journey">Player Journey</a></li>
+    </ul>
+  </div>
+  <div class="footer-links">
+    <h4>Get Involved</h4>
+    <ul>
+      <li><a href="#fans">Fan Membership</a></li>
+      <li><a href="#support">Sponsor a Player</a></li>
+      <li><a href="#support">Corporate Partners</a></li>
+      <li><a href="#support">Refer a Youth</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2025 Samurai FC · Powered by <a href="#">Chendeleza Africa</a></p>
+  <p style="font-family:'Noto Serif JP',serif; font-size:0.85rem; color:rgba(255,255,255,0.2);">侍FC · ケニア</p>
+</div>
+
+</body>
+</html>
